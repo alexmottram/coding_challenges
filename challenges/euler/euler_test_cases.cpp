@@ -9,6 +9,7 @@ TEST_SUITE_BEGIN("Euler Test Case Solution Suite");
 TEST_CASE("Test solution")
 {
 	CHECK(euler::problem_1_solution()==233168);
+	CHECK(euler::problem_2_solution()==4613732);
 }
 
 TEST_SUITE_END;

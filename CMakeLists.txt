@@ -6,6 +6,8 @@ set(test_tools doctest.h doctest.cpp)
 set(euler_problems
     challenges/euler/problem_1/problem_1.cpp
     challenges/euler/problem_1/problem_1.h
+    challenges/euler/problem_2/problem_2.cpp
+    challenges/euler/problem_2/problem_2.h
     challenges/euler/euler_test_cases.cpp
     challenges/euler/all_euler_solutions.h
 )
