@@ -20,8 +20,12 @@ TEST_CASE("Test solution")
 	// SUBCASE("Problem 4:") {
 	// 	CHECK(euler::problem_4_solution()==906609);
 	// }
-	SUBCASE("Problem 5:") {
-		CHECK(euler::problem_5_solution()==0);
+	// SUBCASE("Problem 5:") {
+	// 	CHECK(euler::problem_5_solution()==232792560);
+	// }
+	SUBCASE("Problem 6:") {
+		CHECK(euler::problem_6_solution(10)==2640);
+		CHECK(euler::problem_6_solution(100)==25164150);
 	}
 }
 

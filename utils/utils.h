@@ -5,3 +5,4 @@
 
 // Then all the headers under the utils
 #include "std_extensions.h"
+#include "console/progress_bar.h"
