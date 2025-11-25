@@ -1,5 +1,6 @@
 #pragma once
 #include "../../../utils/utils.h"
+#include <functional>
 
 namespace  euler {
 	// P[i] = sum_x = 1 to i for x
@@ -16,6 +17,7 @@ namespace  euler {
 	// Finally P[i] = i(i+1)/2
 	// SO S[i] = SUM_i=2 to i((x^2)(x-1))
 
+	// progress_cb: optional callback receiving progress fraction in [0,1]
 	long long diff_of_sum_of_squares_vs_square_sum(long long n);
 
 	inline long long problem_6_solution(long long n) {

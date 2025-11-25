@@ -3,6 +3,15 @@ project(coding_challenges)
 
 set(CMAKE_CXX_STANDARD 20)
 
+# GLFW setup
+add_subdirectory(glfw)
+set(BUILD_SHARED_LIBS ON CACHE BOOL "Build shared libraries" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+# OpenGL setup
+find_package(OpenGL REQUIRED)
+
 set(test_tools doctest.h doctest.cpp)
 
 set(utils
@@ -11,7 +20,7 @@ set(utils
     utils/precompile_header.cpp utils/precompile_header.h
     utils/prime_utils.cpp
     utils/prime_utils.h
-    utils/console/progress_bar.h
+        utils/guis/progress_bar.h
 )
 
 set(utils_unittests
@@ -49,8 +58,8 @@ set(imgui
     imgui/imstb_rectpack.h
     imgui/imstb_textedit.h
     imgui/imstb_truetype.h
-    imgui/backends/imgui_impl_win32.h imgui/backends/imgui_impl_win32.cpp
-    imgui/backends/imgui_impl_dx11.h imgui/backends/imgui_impl_dx11.cpp
+    imgui/backends/imgui_impl_opengl3.h imgui/backends/imgui_impl_opengl3.cpp
+    imgui/backends/imgui_impl_glfw.h imgui/backends/imgui_impl_glfw.cpp
 )
 
 add_executable(
@@ -60,6 +69,7 @@ add_executable(
     "${euler_problems}"
     "${euler_doctest}"
 )
+
 add_executable(
     Util-Tests
     "${test_tools}"
@@ -71,7 +81,30 @@ add_executable(
     Run-Main
     main.cpp
     "${utils}"
+    "${imgui}"
     "${euler_problems}"
+)
+target_include_directories(Run-Main PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/imgui/)
+target_link_libraries(Run-Main PRIVATE glfw)
+target_link_libraries(Run-Main PRIVATE glfw OpenGL::GL)
+target_compile_definitions(Run-Main PRIVATE GLFW_DLL)
+add_custom_command(TARGET Run-Main POST_BUILD
+        COMMAND ${CMAKE_COMMAND}  -E copy_if_different
+        $<TARGET_FILE:glfw>
+        $<TARGET_FILE_DIR:Run-Main>
+)
+
+
+add_executable(
+    GLFW-Demo
+    glfw_demo.cpp
+)
+
+target_link_libraries(GLFW-Demo PRIVATE glfw)
+add_custom_command(TARGET GLFW-Demo POST_BUILD
+        COMMAND ${CMAKE_COMMAND}  -E copy_if_different
+        $<TARGET_FILE:glfw>
+        $<TARGET_FILE_DIR:GLFW-Demo>
 )
 
 add_executable(
@@ -80,6 +113,12 @@ add_executable(
     "${imgui}"
 )
 
-target_include_directories(ImGUI-Demo
-    PUBLIC ${PROJECT_SOURCE_DIR}/imgui/
+target_include_directories(ImGUI-Demo PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/imgui/)
+target_link_libraries(ImGUI-Demo PRIVATE glfw)
+target_link_libraries(ImGUI-Demo PRIVATE glfw OpenGL::GL)
+target_compile_definitions(ImGUI-Demo PRIVATE GLFW_DLL)
+add_custom_command(TARGET ImGUI-Demo POST_BUILD
+        COMMAND ${CMAKE_COMMAND}  -E copy_if_different
+        $<TARGET_FILE:glfw>
+        $<TARGET_FILE_DIR:ImGUI-Demo>
 )
