@@ -5,4 +5,5 @@
 
 // Then all the headers under the utils
 #include "std_extensions.h"
-#include "guis/progress_bar.h"
+#include "guis/progress_log_window.h"
+#include "guis/ui_manager.h"

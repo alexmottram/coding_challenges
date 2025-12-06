@@ -20,7 +20,9 @@ set(utils
     utils/precompile_header.cpp utils/precompile_header.h
     utils/prime_utils.cpp
     utils/prime_utils.h
-        utils/guis/progress_bar.h
+    utils/guis/imgui_glfw_setup.h
+    utils/guis/progress_log_window.h
+    utils/guis/ui_manager.h utils/guis/ui_manager.cpp
 )
 
 set(utils_unittests
