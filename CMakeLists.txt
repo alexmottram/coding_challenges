@@ -20,14 +20,12 @@ set(utils
     utils/precompile_header.cpp utils/precompile_header.h
     utils/prime_utils.cpp
     utils/prime_utils.h
-    utils/guis/imgui_glfw_setup.h
-    utils/guis/progress_log_window.h
-    utils/guis/ui_manager.h utils/guis/ui_manager.cpp
 )
 
 set(utils_unittests
     doctest.h doctest.cpp
     utils_tests/prime_utils_tests.cpp)
+
 
 set(euler_problems
     challenges/euler/problem_1/problem_1.cpp
@@ -64,6 +62,15 @@ set(imgui
     imgui/backends/imgui_impl_glfw.h imgui/backends/imgui_impl_glfw.cpp
 )
 
+set(guis
+    "${imgui}"
+    guis/guis.h
+    guis/precompile_header.cpp utils/precompile_header.h
+    guis/imgui_glfw_setup.cpp guis/imgui_glfw_setup.h
+    guis/gui_manager.cpp guis/gui_manager.h
+    guis/widgets/gui_logger.cpp guis/widgets/gui_logger.h
+)
+
 add_executable(
     Euler-Solutions
     "${test_tools}"
@@ -80,47 +87,25 @@ add_executable(
 )
 
 add_executable(
-    Run-Main
-    main.cpp
+    GuiTest
+    guis/demos/simple_logger_demo.cpp
+    "${guis}"
     "${utils}"
-    "${imgui}"
-    "${euler_problems}"
-)
-target_include_directories(Run-Main PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/imgui/)
-target_link_libraries(Run-Main PRIVATE glfw)
-target_link_libraries(Run-Main PRIVATE glfw OpenGL::GL)
-target_compile_definitions(Run-Main PRIVATE GLFW_DLL)
-add_custom_command(TARGET Run-Main POST_BUILD
-        COMMAND ${CMAKE_COMMAND}  -E copy_if_different
-        $<TARGET_FILE:glfw>
-        $<TARGET_FILE_DIR:Run-Main>
 )
 
+target_include_directories(GuiTest PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/imgui/)
+target_link_libraries(GuiTest PRIVATE glfw)
+target_link_libraries(GuiTest PRIVATE glfw OpenGL::GL)
+target_compile_definitions(GuiTest PRIVATE GLFW_DLL)
 
 add_executable(
-    GLFW-Demo
-    glfw_demo.cpp
+    CounterDemo
+        guis/demos/multiple_logger_demo.cpp
+    "${guis}"
+    "${utils}"
 )
 
-target_link_libraries(GLFW-Demo PRIVATE glfw)
-add_custom_command(TARGET GLFW-Demo POST_BUILD
-        COMMAND ${CMAKE_COMMAND}  -E copy_if_different
-        $<TARGET_FILE:glfw>
-        $<TARGET_FILE_DIR:GLFW-Demo>
-)
-
-add_executable(
-    ImGUI-Demo
-    im_gui_demo.cpp
-    "${imgui}"
-)
-
-target_include_directories(ImGUI-Demo PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/imgui/)
-target_link_libraries(ImGUI-Demo PRIVATE glfw)
-target_link_libraries(ImGUI-Demo PRIVATE glfw OpenGL::GL)
-target_compile_definitions(ImGUI-Demo PRIVATE GLFW_DLL)
-add_custom_command(TARGET ImGUI-Demo POST_BUILD
-        COMMAND ${CMAKE_COMMAND}  -E copy_if_different
-        $<TARGET_FILE:glfw>
-        $<TARGET_FILE_DIR:ImGUI-Demo>
-)
+target_include_directories(CounterDemo PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/imgui/)
+target_link_libraries(CounterDemo PRIVATE glfw)
+target_link_libraries(CounterDemo PRIVATE glfw OpenGL::GL)
+target_compile_definitions(CounterDemo PRIVATE GLFW_DLL)
