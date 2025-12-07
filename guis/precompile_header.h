@@ -13,7 +13,10 @@
 #include <chrono>
 #include <cstdio>
 
-// Optional third-party GUI headers (commented out to avoid hard dependency during compile)
-// If you want real ImGui usage, uncomment and ensure include path is available.
+// Optional third-party GUI headers (these are required by the ImGui/GLFW-based GUI code).
+// If you build targets that don't use ImGui/GLFW, you can define NO_IMGUI to avoid the dependency
+// and comment these out or wrap them behind a project-wide macro.
+#ifndef NO_IMGUI
 #include <imgui.h>
 #include <GLFW/glfw3.h>
+#endif

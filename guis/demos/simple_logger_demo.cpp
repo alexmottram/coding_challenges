@@ -1,10 +1,9 @@
 #include "../guis.h"
-#include <thread>
-#include <chrono>
 
 int main() {
     guis::GuiLogger logger("test_logger", "Test Logger");
     logger.append("Hello");
+    std::this_thread::sleep_for(std::chrono::seconds(4));
     logger.append("World");
 
     // Let the GUI manager run for a short while

@@ -19,6 +19,9 @@ namespace guis {
             void register_widget(const std::string& key, const std::string& title, RenderFn render_fn);
             void unregister_widget(const std::string& key);
 
+            // Returns true if the caller is running on the thread that created the GUIManager
+            [[nodiscard]] bool isMainThread() const;
+
         private:
             GUIManager();
             ~GUIManager();
@@ -34,5 +37,6 @@ namespace guis {
 
             std::thread thread_;
             std::atomic<bool> running_{false};
+            std::thread::id main_thread_id_;
     };
 }
