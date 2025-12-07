@@ -12,6 +12,8 @@
 #include <iostream>
 #include <chrono>
 #include <cstdio>
+// C++20 formatting utilities
+#include <format>
 
 // Optional third-party GUI headers (these are required by the ImGui/GLFW-based GUI code).
 // If you build targets that don't use ImGui/GLFW, you can define NO_IMGUI to avoid the dependency

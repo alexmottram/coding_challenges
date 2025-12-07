@@ -100,7 +100,7 @@ target_compile_definitions(GuiTest PRIVATE GLFW_DLL)
 
 add_executable(
     CounterDemo
-        guis/demos/multiple_logger_demo.cpp
+    guis/demos/multiple_logger_demo.cpp
     "${guis}"
     "${utils}"
 )
